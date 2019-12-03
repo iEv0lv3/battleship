@@ -19,4 +19,10 @@ class ShipTest < Minitest::Test
     assert_equal 3, cruiser.length
     assert_equal 3, cruiser.health
   end
+
+  def test_ship_starts_sunk_equals_false
+    cruiser = Ship.new('Cruiser', 3)
+
+    assert_equal false, cruiser.sunk?
+  end
 end
