@@ -26,4 +26,12 @@ class Cell
       @ship.hit
     end
   end
+
+  def render(reveal = nil)
+    return "." if !self.fired_upon? && self.empty?
+    return "M" if self.fired_upon? && self.empty?
+    return "H" if self.fired_upon? && !self.empty? && !self.ship.sunk?
+    return "S" if !self.fired_upon? && !self.empty?
+    return "X" if self.fired_upon? && !self.empty? && self.ship.sunk?
+  end
 end
