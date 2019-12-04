@@ -28,10 +28,10 @@ class Cell
   end
 
   def render(reveal = nil)
-    return "." if !self.fired_upon? && self.empty?
-    return "M" if self.fired_upon? && self.empty?
-    return "H" if self.fired_upon? && !self.empty? && !self.ship.sunk?
-    return "S" if !self.fired_upon? && !self.empty?
-    return "X" if self.fired_upon? && !self.empty? && self.ship.sunk?
+    return "." if !fired_upon? && empty?
+    return "M" if fired_upon? && empty?
+    return "H" if fired_upon? && !empty? && !ship.sunk?
+    return "S" if !fired_upon? && !empty? && reveal == true
+    return "X" if fired_upon? && !empty? && ship.sunk?
   end
 end
