@@ -37,26 +37,53 @@ class Board
 
     letters = []
     numbers = []
-    next_num = 1
+    coordinate_split(coordinates, letters, numbers)
+    if horizontal_placement?(letters, numbers)
+      true
+    elsif vertical_placement?(letters, numbers)
+      true
+    else
+      false
+    end
+  end
+
+  def coordinate_split(coordinates, letters, numbers)
     coordinates.each do |coordinate|
       letters << coordinate.split(//)[0]
       numbers << coordinate.split(//)[1]
     end
-    return unless letters.uniq.length == 1
+  end
+
+
+  def horizontal_placement?(letters, numbers)
+    index = 1
+
+    return false unless letters.uniq.length == 1
     numbers.each do |num|
       num = num.to_i
-      if num.next != numbers[next_num].to_i && numbers.last.to_i != num
-        # binding.pry
+      if num.next != numbers[index].to_i && numbers.last.to_i != num
         return false
-      elsif num.next == numbers[next_num].to_i && numbers.last.to_i == num.next
-        # binding.pry
+      elsif num.next == numbers[index].to_i && numbers.last.to_i == num.next
         return true
-      elsif num.next == numbers[next_num].to_i && numbers.last.to_i != num
-        # binding.pry
-        next_num += 1
+      elsif num.next == numbers[index].to_i && numbers.last.to_i != num
+        index += 1
       end
-      # binding.pry
     end
-    # true
+  end
+
+  def vertical_placement?(letters, numbers)
+    index = 1
+    return false unless numbers.uniq.length == 1
+
+    letters.each do |letter|
+      letter = letter.ord
+      if letter.next != letters[index].ord && letters.last.ord != letter
+        return false
+      elsif letter.next == letters[index].ord && letters.last.ord == letter.next
+        return true
+      elsif letter.next == letters[index].ord && letters.last.ord != letter
+        index += 1
+      end
+    end
   end
 end
