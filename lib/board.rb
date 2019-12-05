@@ -1,12 +1,14 @@
+require 'pry'
+
 class Board
-attr_accessor :cells
+  attr_accessor :cells
 
   def initialize
     @cells = create_board_cells
   end
 
   def create_board_cells
-    cells = {
+    {
       "A1" => Cell.new("A1"),
       "A2" => Cell.new("A2"),
       "A3" => Cell.new("A3"),
@@ -27,11 +29,12 @@ attr_accessor :cells
   end
 
   def valid_coordinate?(coordinate)
-    cells.has_key?(coordinate)
+    cells.key?(coordinate)
   end
 
   def valid_placement?(ship, coordinates)
     return false if coordinates.length != ship.length
+
     letters = []
     numbers = []
     next_num = 1
@@ -39,19 +42,21 @@ attr_accessor :cells
       letters << coordinate.split(//)[0]
       numbers << coordinate.split(//)[1]
     end
-    if letters.uniq.length == 1
-      numbers.each do |num|
-        num = num.to_i
-        if num.next != numbers[next_num].to_i && numbers.last == false
-          return false
-        elsif num.next == numbers[next_num].to_i && numbers.last == true
-          return true
-        elsif num.next == numbers[next_num].to_i
-          next_num += 1
-        end
+    return unless letters.uniq.length == 1
+    numbers.each do |num|
+      num = num.to_i
+      if num.next != numbers[next_num].to_i && numbers.last.to_i != num
+        # binding.pry
+        return false
+      elsif num.next == numbers[next_num].to_i && numbers.last.to_i == num.next
+        # binding.pry
+        return true
+      elsif num.next == numbers[next_num].to_i && numbers.last.to_i != num
+        # binding.pry
+        next_num += 1
       end
-      true
+      # binding.pry
     end
+    # true
   end
-
 end
