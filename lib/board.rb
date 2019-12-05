@@ -1,12 +1,14 @@
+require 'pry'
+
 class Board
-attr_accessor :cells
+  attr_accessor :cells
 
   def initialize
     @cells = create_board_cells
   end
 
   def create_board_cells
-    cells = {
+    {
       "A1" => Cell.new("A1"),
       "A2" => Cell.new("A2"),
       "A3" => Cell.new("A3"),
@@ -27,31 +29,61 @@ attr_accessor :cells
   end
 
   def valid_coordinate?(coordinate)
-    cells.has_key?(coordinate)
+    cells.key?(coordinate)
   end
 
   def valid_placement?(ship, coordinates)
     return false if coordinates.length != ship.length
+
     letters = []
     numbers = []
-    next_num = 1
+    coordinate_split(coordinates, letters, numbers)
+    if horizontal_placement?(letters, numbers)
+      true
+    elsif vertical_placement?(letters, numbers)
+      true
+    else
+      false
+    end
+  end
+
+  def coordinate_split(coordinates, letters, numbers)
     coordinates.each do |coordinate|
       letters << coordinate.split(//)[0]
       numbers << coordinate.split(//)[1]
     end
-    if letters.uniq.length == 1
-      numbers.each do |num|
-        num = num.to_i
-        if num.next != numbers[next_num].to_i && numbers.last == false
-          return false
-        elsif num.next == numbers[next_num].to_i && numbers.last == true
-          return true
-        elsif num.next == numbers[next_num].to_i
-          next_num += 1
-        end
+  end
+
+
+  def horizontal_placement?(letters, numbers)
+    index = 1
+
+    return false unless letters.uniq.length == 1
+    numbers.each do |num|
+      num = num.to_i
+      if num.next != numbers[index].to_i && numbers.last.to_i != num
+        return false
+      elsif num.next == numbers[index].to_i && numbers.last.to_i == num.next
+        return true
+      elsif num.next == numbers[index].to_i && numbers.last.to_i != num
+        index += 1
       end
-      true
     end
   end
 
+  def vertical_placement?(letters, numbers)
+    index = 1
+    return false unless numbers.uniq.length == 1
+
+    letters.each do |letter|
+      letter = letter.ord
+      if letter.next != letters[index].ord && letters.last.ord != letter
+        return false
+      elsif letter.next == letters[index].ord && letters.last.ord == letter.next
+        return true
+      elsif letter.next == letters[index].ord && letters.last.ord != letter
+        index += 1
+      end
+    end
+  end
 end
