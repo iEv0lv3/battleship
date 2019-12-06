@@ -38,7 +38,9 @@ class Board
     letters = []
     numbers = []
     coordinate_split(coordinates, letters, numbers)
-    if horizontal_placement?(letters, numbers)
+    if ship_check(coordinates) == false
+      false
+    elsif horizontal_placement?(letters, numbers)
       true
     elsif vertical_placement?(letters, numbers)
       true
@@ -54,6 +56,13 @@ class Board
     end
   end
 
+  def ship_check(coordinates)
+    keys = coordinates
+    keys.each do |key|
+      return false if @cells[key].empty? == false
+      return true if @cells[key].empty? == true && keys.last == key
+    end
+  end
 
   def horizontal_placement?(letters, numbers)
     index = 1

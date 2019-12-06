@@ -85,4 +85,14 @@ class BoardTest < Minitest::Test
     cell_3 = board.cells["A3"]
     assert_equal true, cell_3.ship == cell_2.ship
   end
+
+  def test_that_ships_will_not_overlap
+    board = Board.new
+    cruiser = Ship.new("Cruiser", 3)
+    board.place(cruiser, ["A1", "A2", "A3"])
+    submarine = Ship.new("Submarine", 2)
+
+    assert_equal false, board.valid_placement?(submarine, ['A1', 'B1'])
+    assert_equal false, board.valid_placement?(cruiser, ['A2', 'B2', 'C2'])
+  end
 end
