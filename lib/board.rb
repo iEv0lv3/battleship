@@ -1,5 +1,3 @@
-require 'pry'
-
 class Board
   attr_accessor :cells
 
@@ -100,6 +98,17 @@ class Board
     keys = coordinates
     keys.each do |key|
       @cells[key].place_ship(ship)
+    end
+  end
+
+  def render(reveal = nil)
+    keys = @cells.keys
+    coordinate_groups = keys.each_slice(4).to_a
+    coordinate_groups.each do |group|
+      output = group.map do |coordinate|
+        @cells[coordinate].render
+      end
+      p output.join(' ').prepend(group[0].byteslice(0) + ' ')
     end
   end
 end

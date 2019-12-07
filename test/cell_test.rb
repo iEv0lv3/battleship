@@ -4,6 +4,7 @@ require 'minitest/autorun'
 require 'minitest/pride'
 require './lib/ship'
 require './lib/cell'
+require 'pry'
 
 class CellTest < Minitest::Test
 
@@ -14,9 +15,8 @@ class CellTest < Minitest::Test
 
   def test_cell_is_empty
     cell = Cell.new("B4")
+
     assert_equal true, cell.empty?
-    cell.ship = true
-    assert_equal false, cell.empty?
   end
 
   def test_ship_can_be_placed_in_cell
