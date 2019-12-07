@@ -95,16 +95,24 @@ class Board
   end
 
   def place(ship, coordinates)
-    keys = coordinates
-    keys.each do |key|
-      @cells[key].place_ship(ship)
+    if valid_placement?(ship, coordinates) == false
+      p "Coordinates not vaild for ship placement, try again!"
+    else
+      keys = coordinates
+      keys.each do |key|
+        @cells[key].place_ship(ship)
+      end
+      p "Successfully placed ship!"
     end
   end
 
   def render(reveal = nil)
     keys = @cells.keys
     coordinate_groups = keys.each_slice(4).to_a
-    p '  1 2 3 4'
+    range = (1..coordinate_groups.length)
+    print '  '
+    range.step(1) { |column| print ' ' + column.to_s }
+    puts "\n"
     coordinate_groups.each do |group|
       output = group.map do |coordinate|
         @cells[coordinate].render
@@ -113,3 +121,11 @@ class Board
     end
   end
 end
+
+require './lib/ship'
+require './lib/board'
+require './lib/cell'
+board = Board.new
+cruiser = Ship.new("Cruiser", 3)
+submarine = Ship.new("Submarine", 2)
+require 'pry'; binding.pry
