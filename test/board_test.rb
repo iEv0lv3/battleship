@@ -95,4 +95,14 @@ class BoardTest < Minitest::Test
     assert_equal false, board.valid_placement?(submarine, ['A1', 'B1'])
     assert_equal false, board.valid_placement?(cruiser, ['A2', 'B2', 'C2'])
   end
+
+  def test_board_render_produces_output
+    board = Board.new
+
+    assert_output "  1 2 3 4", board.render
+                  "A . . . ."
+                  "B . . . ."
+                  "C . . . ."
+                  "D . . . ."
+  end
 end
