@@ -99,6 +99,10 @@ class BoardTest < Minitest::Test
   def test_board_render_produces_output
     board = Board.new
 
-    assert board.render
+    assert_output "  1 2 3 4", board.render
+                  "A . . . ."
+                  "B . . . ."
+                  "C . . . ."
+                  "D . . . ."
   end
 end
