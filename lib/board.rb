@@ -110,14 +110,15 @@ class Board
     keys = @cells.keys
     coordinate_groups = keys.each_slice(4).to_a
     range = (1..coordinate_groups.length)
-    print '  '
+    require 'pry'; binding.pry
+    print ' '
     range.step(1) { |column| print ' ' + column.to_s }
     puts "\n"
     coordinate_groups.each do |group|
       output = group.map do |coordinate|
         @cells[coordinate].render
       end
-      p output.join(' ').prepend(group[0].byteslice(0) + ' ')
+      puts output.join(' ').prepend(group[0].byteslice(0) + ' ')
     end
   end
 end
