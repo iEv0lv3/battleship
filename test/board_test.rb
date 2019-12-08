@@ -97,6 +97,7 @@ class BoardTest < Minitest::Test
   end
 
   def test_board_render_produces_output
+    skip
     board = Board.new
 
     assert_output "  1 2 3 4", board.render
@@ -104,5 +105,16 @@ class BoardTest < Minitest::Test
                   "B . . . ."
                   "C . . . ."
                   "D . . . ."
+  end
+
+  def test_place_ships_output
+    board = Board.new
+    cruiser = Ship.new("Cruiser", 3)
+    board.place(cruiser, ["A1", "A2", "A3"])
+    submarine = Ship.new("Submarine", 2)
+
+    assert_equal "Coordinates not vaild for ship placement, try again!", 
+                 board.place(cruiser, ["A1", "B2", "C3"])
+    assert_equal "Successfully placed ship!", board.place(submarine, ["B1", "C1"])
   end
 end
