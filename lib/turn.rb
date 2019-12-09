@@ -17,21 +17,32 @@ class Turn
     puts "The #{@user.ships[0].name} is #{@user.ships[0].length} units and the #{@user.ships[1].name} is #{@user.ships[1].length} units long."
 
     @user.board.render
+    human_ship_placement_input
+  end
 
+  def human_ship_placement_input
     @user.ships.each do |ship|
       loop do
         puts "Enter the squares for the #{ship.name} (#{ship.length} spaces):"
         print '>'
         user_input = gets.chomp.upcase
         coordinates = split_human_coordinates(user_input)
-        if coordinates.all? { |coordinate| @user.board.cells.include?(coordinate) } == false
-          puts 'Those are invalid coordinates. Please try again.'
-        else
-          @user.board.place(ship, coordinates)
-          @user.board.render(true)
+        if validate_human_input(ship, coordinates) == true
           break
         end
       end
+    end
+  end
+
+  def validate_human_input(ship, coordinates)
+    if coordinates.length != ship.length
+      puts 'Those are invalid coordinates. Please try again.'
+    elsif coordinates.all? { |cell| @user.board.cells.include?(cell) } == false
+      puts 'Those are invalid coordinates. Please try again.'
+    else
+      @user.board.place(ship, coordinates)
+      @user.board.render(true)
+      true
     end
   end
 
