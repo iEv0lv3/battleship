@@ -3,11 +3,12 @@ SimpleCov.start
 require 'minitest/autorun'
 require 'minitest/pride'
 require './lib/ship'
-require 'pry'
+require './lib/turn'
 require './lib/board'
 require './lib/cell'
 require './lib/game'
 require './lib/user'
+require 'pry'
 
 class GameTest < Minitest::Test
   def test_game_class_exists
@@ -32,10 +33,7 @@ class GameTest < Minitest::Test
   end
 
   def test_user_can_place_ships
-    board = Board.new
-    cruiser = Ship.new("Cruiser", 3)
-    board.place(cruiser, ["A1", "A2", "A3"])
-    submarine = Ship.new("Submarine", 2)
+    game1 = Game.new
+    binding.pry
   end
-
 end
