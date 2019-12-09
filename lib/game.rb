@@ -17,6 +17,7 @@ class Game
       turn = Turn.new(@turn_number, @computer_user)
       turn.cpu_turn_0
       puts "I have laid out my ships on the grid."
+      human_game_start
     end
   end
 
