@@ -3,6 +3,7 @@ class User
 
   def initialize
     @board = Board.new
+    @opponent_board = Board.new
     @ships = new_ships
   end
 
