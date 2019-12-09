@@ -19,16 +19,21 @@ class Turn
     @user.board.render
 
     @user.ships.each do |ship|
-      puts "Enter the squares for the #{ship.name}(#{ship.length} spaces):"
-      print '>'
-      user_input = gets.chomp.upcase
-      coordinates = split_human_coordinates(user_input)
-      binding.pry
-      @user.board.place(ship, coordinates)
-      @user.board.render(true)
+      loop do
+        puts "Enter the squares for the #{ship.name} (#{ship.length} spaces):"
+        print '>'
+        user_input = gets.chomp.upcase
+        coordinates = split_human_coordinates(user_input)
+        if coordinates.all? { |coordinate| @user.board.cells.include?(coordinate) } == false
+          puts 'Those are invalid coordinates. Please try again.'
+        else
+          @user.board.place(ship, coordinates)
+          @user.board.render(true)
+          break
+        end
+      end
     end
   end
-
 
   def split_human_coordinates(user_input)
     user_input.split(' ')
