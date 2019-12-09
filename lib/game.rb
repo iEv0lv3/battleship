@@ -15,20 +15,13 @@ class Game
       puts "Goodbye."
     elsif choice == 'p'
       turn = Turn.new(@turn_number, @computer_user)
-      turn.start_turn_0
+      turn.cpu_turn_0
       puts "I have laid out my ships on the grid."
     end
   end
 
-  def human_turn_0
-    puts "You now need to lay out your #{@human_user.ships.length} ships."
-    puts "The #{@human_user.ships[0].name} is #{@human_user.ships[0].length}
-    and the #{@human_user.ships[1].name} is #{@human_user.ships[1].length}
-    units long."
-    @human_user.board.render
-    puts "Enter the squares for the #{@human_user.ships[0].name}
-    (#{@human_user.ships[0].length} spaces):"
-    print '>'
-    gets.chomp.upcase
+  def human_game_start
+    turn = Turn.new(@turn_number, @human_user)
+    turn.human_turn_0
   end
 end

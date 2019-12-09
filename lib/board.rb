@@ -116,7 +116,7 @@ class Board
     puts "\n"
     coordinate_groups.each do |group|
       output = group.map do |coordinate|
-        @cells[coordinate].render
+        @cells[coordinate].render(reveal)
       end
       puts output.join(' ').prepend(group[0].byteslice(0) + ' ')
     end
