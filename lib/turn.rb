@@ -1,6 +1,6 @@
 require 'pry'
 class Turn
-  attr_reader :user, :turn_number
+  attr_reader :user, :turn_number, :opponent
   def initialize(turn, user, opponent)
     @turn_number = turn
     @user = user
