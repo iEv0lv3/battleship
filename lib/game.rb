@@ -1,10 +1,34 @@
 class Game
-  attr_reader :human_user, :computer_user, :turn_number
+  attr_reader :human_user, :computer_user, :turn_number, :game_number
 
   def initialize
     @human_user = User.new
     @computer_user = User.new
     @turn_number = 0
+    @new_game = play_game
+  end
+
+  def play_game
+    game_setup
+    loop do
+      human_lose = @human_user.ships.all? do |ship|
+        ship.sunk?
+      end
+      cpu_lose = @computer_user.ships.all? do |ship|
+        ship.sunk?
+      end
+      if human_lose == true
+        puts 'I won!'
+        break
+      elsif cpu_lose == true
+        puts 'You won!'
+        break
+      else
+        take_turn
+      end
+    end
+    @new_game = Game.new
+    play_game
   end
 
   def game_setup

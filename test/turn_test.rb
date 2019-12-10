@@ -13,6 +13,7 @@ require './lib/turn'
 class TurnTest < Minitest::Test
 
   def test_turn_exists
+    skip
     turn = 0
     user1 = User.new
     turn1 = Turn.new(turn, user1)
@@ -21,6 +22,7 @@ class TurnTest < Minitest::Test
   end
 
   def test_turn_attributes
+    skip
     turn = 0
     user1 = User.new
     turn1 = Turn.new(turn, user1)
