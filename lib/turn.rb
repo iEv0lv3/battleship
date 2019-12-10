@@ -42,6 +42,8 @@ class Turn
       puts 'Those are invalid coordinates. Please try again.'
     elsif coordinates.all? { |cell| @user.board.cells.include?(cell) } == false
       puts 'Those are invalid coordinates. Please try again.'
+    elsif @user.board.valid_placement?(ship, coordinates) == false
+      puts 'Those are invalid coordinates. Please try again.'
     else
       coordinates.sort!
       @user.board.place(ship, coordinates)
