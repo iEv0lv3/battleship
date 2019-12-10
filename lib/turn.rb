@@ -1,54 +1,25 @@
 require 'pry'
 class Turn
-  attr_reader :user, :turn_number, :opponent
+  attr_reader :turn_number, :user, :opponent
+
   def initialize(turn, user, opponent)
     @turn_number = turn
     @user = user
     @opponent = opponent
   end
 
-  def cpu_turn_0
+  def cpu_first_turn
     @user.ships.each do |ship|
       @user.board.place(ship, @user.board.placement_options(ship))
     end
   end
 
-  def cpu_turn
-
-  end
-
-  def human_turn
-    loop do
-      human_boards_display
-      puts "Enter the coordinate for your shot:"
-      print "> "
-      coordinate = gets.chomp.upcase.strip
-      if @opponent.board.cells.include?(coordinate)
-        @opponent.board.cells[coordinate].fire_upon
-        @opponent.board.render
-        break
-      else
-        puts "Please enter a valid coordinate."
-      end
-    end
-  end
-
-  def human_boards_display
-    puts "=============COMPUTER BOARD============="
-    puts " "
-    @opponent.board.render
-    puts " "
-    puts "==============PLAYER BOARD=============="
-    puts " "
-    @user.board.render
-    puts " "
-  end
-
-  def human_turn_0
+  def human_first_turn
     puts "You now need to lay out your #{@user.ships.length} ships."
-    puts "The #{@user.ships[0].name} is #{@user.ships[0].length} units and the #{@user.ships[1].name} is #{@user.ships[1].length} units long."
-
-    @user.board.render
+    print "The #{@user.ships[0].name} is #{@user.ships[0].length} units and "
+    print "the #{@user.ships[1].name} is #{@user.ships[1].length} units long."
+    puts ' '
+    @user.board.render(true)
     human_ship_placement_input
   end
 
@@ -81,5 +52,38 @@ class Turn
 
   def split_human_coordinates(user_input)
     user_input.split(' ')
+  end
+
+  def human_turn
+    loop do
+      human_boards_display
+      puts "Enter the coordinate for your shot:"
+      print "> "
+      coordinate = gets.chomp.upcase.strip
+      puts ' '
+      if @opponent.board.cells.include?(coordinate)
+        @opponent.board.cells[coordinate].fire_upon
+        puts "=============COMPUTER BOARD============="
+        @opponent.board.render
+        break
+      else
+        puts "Please enter a valid coordinate."
+      end
+    end
+  end
+
+  def human_boards_display
+    puts "=============COMPUTER BOARD============="
+    puts " "
+    @opponent.board.render
+    puts " "
+    puts "==============PLAYER BOARD=============="
+    puts " "
+    @user.board.render(true)
+    puts " "
+  end
+
+  def cpu_turn
+    #cpu
   end
 end
