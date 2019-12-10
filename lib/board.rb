@@ -107,7 +107,7 @@ class Board
     end
   end
 
-  def render(reveal = nil)
+  def render(reveal = false)
     keys = @cells.keys
     coordinate_groups = keys.each_slice(4).to_a
     range = (1..coordinate_groups.length)
