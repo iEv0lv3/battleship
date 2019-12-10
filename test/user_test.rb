@@ -9,7 +9,7 @@ require './lib/cell'
 require './lib/user'
 
 class UserTest < Minitest::Test
-  
+
   def test_user_exists
     user1 = User.new
 
