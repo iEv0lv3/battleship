@@ -1,3 +1,4 @@
+require 'pry'
 class Board
   attr_accessor :cells
 
@@ -96,13 +97,13 @@ class Board
 
   def place(ship, coordinates)
     if valid_placement?(ship, coordinates) == false
-      p "Coordinates not vaild for ship placement, try again!"
+      "Coordinates not vaild for ship placement, try again!"
     else
       keys = coordinates
       keys.each do |key|
         @cells[key].place_ship(ship)
       end
-      p "Successfully placed ship!"
+      "Successfully placed ship!"
     end
   end
 
@@ -110,23 +111,53 @@ class Board
     keys = @cells.keys
     coordinate_groups = keys.each_slice(4).to_a
     range = (1..coordinate_groups.length)
-    require 'pry'; binding.pry
     print ' '
     range.step(1) { |column| print ' ' + column.to_s }
     puts "\n"
     coordinate_groups.each do |group|
       output = group.map do |coordinate|
-        @cells[coordinate].render
+        @cells[coordinate].render(reveal)
       end
       puts output.join(' ').prepend(group[0].byteslice(0) + ' ')
     end
   end
-end
 
-require './lib/ship'
-require './lib/board'
-require './lib/cell'
-board = Board.new
-cruiser = Ship.new("Cruiser", 3)
-submarine = Ship.new("Submarine", 2)
-require 'pry'; binding.pry
+  def placement_options(ship) 
+    h_groups = horizontal_groups
+    v_groups = vertical_groups
+    ship_size = ship.length
+    h_options = []
+    v_options = []
+    h_groups.each do |group|
+      group.each_cons(ship_size) { |coordinate| h_options << coordinate }
+    end
+    v_groups.each do |group|
+      group.each_cons(ship_size) { |coordinate| v_options << coordinate }
+    end
+    random = rand(11)
+    if random > 5
+      h_options.sample
+    else
+      v_options.sample
+    end
+  end
+
+  def horizontal_groups
+    keys = @cells.keys
+    coordinate_groups = keys.each_slice(4).to_a
+  end
+
+  def vertical_groups
+    keys = @cells.keys
+    coordinate_groups = keys.each_slice(4).to_a
+    vertical = []
+    index = 0
+    until index == coordinate_groups.first.length
+      coordinate_groups.each do |group|
+        vertical << group[index]
+      end
+      index += 1
+    end
+    vertical = vertical.each_slice(4).to_a
+  end
+end
