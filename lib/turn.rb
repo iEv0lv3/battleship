@@ -84,6 +84,20 @@ class Turn
   end
 
   def cpu_turn
-    #cpu
+    keys = @opponent.board.cells.keys
+    hit_or_miss = ""
+    loop do
+      coordinate = keys.sample
+      if @opponent.board.cells[coordinate].fired_upon? == false
+        @opponent.board.cells[coordinate].fire_upon
+        hit_or_miss = coordinate
+        break
+      end
+    end
+    if @opponent.board.cells[hit_or_miss].empty?
+      puts "My shot on #{hit_or_miss} was a miss."
+    else
+      puts "My shot on #{hit_or_miss} was a hit."
+    end
   end
 end
