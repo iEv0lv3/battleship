@@ -12,15 +12,15 @@ require 'pry'
 
 class GameTest < Minitest::Test
   def test_game_class_exists
-    game1 = Game.new
+    new_game = Game.new
 
-    assert_instance_of Game, game1
+    assert_instance_of Game, new_game
   end
 
   def test_game_attributes
-    game1 = Game.new
+    new_game = Game.new
     binding.pry
-    assert_instance_of User, game1.human_user
-    assert_instance_of User, game1.computer_user
+    assert_instance_of User, new_game.human_user
+    assert_instance_of User, new_game.computer_user
   end
 end
