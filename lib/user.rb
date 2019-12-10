@@ -1,9 +1,8 @@
 class User
-  attr_accessor :board, :ships, :opponent_board
+  attr_accessor :board, :ships
 
   def initialize
     @board = Board.new
-    @opponent_board = Board.new
     @ships = new_ships
   end
 
