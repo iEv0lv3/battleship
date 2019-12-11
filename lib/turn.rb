@@ -1,4 +1,3 @@
-require 'pry'
 class Turn
   attr_reader :turn_number, :user, :opponent
 
@@ -8,10 +7,26 @@ class Turn
     @opponent = opponent
   end
 
+  def welcome_screen
+    puts 'Welcome to BATTLESHIP'
+    puts 'Enter p to play. Enter q to quit.'
+    choice = gets.chomp.downcase.strip
+    if choice == 'q'
+      puts 'Goodbye.'
+    elsif choice == 'p'
+      cpu_first_turn
+    end
+  end
+
   def cpu_first_turn
     @user.ships.each do |ship|
-      @user.board.place(ship, @user.board.placement_options(ship))
+      loop do
+        placed = @user.board.place(ship, @user.board.placement_options(ship))
+        break unless placed != 'Successfully placed ship!'
+      end
     end
+    puts 'I have laid out my ships on the grid.'
+    'p'
   end
 
   def human_first_turn
@@ -59,35 +74,35 @@ class Turn
   def human_turn
     loop do
       human_boards_display
-      puts "Enter the coordinate for your shot:"
-      print "> "
+      puts 'Enter the coordinate for your shot:'
+      print '> '
       coordinate = gets.chomp.upcase.strip
       puts ' '
       if @opponent.board.cells.include?(coordinate)
         @opponent.board.cells[coordinate].fire_upon
-        puts "=============COMPUTER BOARD============="
+        puts '=============COMPUTER BOARD============='
         @opponent.board.render
         break
       else
-        puts "Please enter a valid coordinate."
+        puts 'Please enter a valid coordinate.'
       end
     end
   end
 
   def human_boards_display
-    puts "=============COMPUTER BOARD============="
-    puts " "
+    puts '=============COMPUTER BOARD============='
+    puts ' '
     @opponent.board.render
-    puts " "
-    puts "==============PLAYER BOARD=============="
-    puts " "
+    puts ' '
+    puts '==============PLAYER BOARD=============='
+    puts ' '
     @user.board.render(true)
-    puts " "
+    puts ' '
   end
 
   def cpu_turn
     keys = @opponent.board.cells.keys
-    hit_or_miss = ""
+    hit_or_miss = ''
     loop do
       coordinate = keys.sample
       if @opponent.board.cells[coordinate].fired_upon? == false
