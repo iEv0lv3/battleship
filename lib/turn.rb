@@ -8,16 +8,28 @@ class Turn
   end
 
   def welcome_screen
-    puts ''
-    puts '===================NEW GAME==================='
-    puts ''
-    puts 'Welcome to BATTLESHIP'
-    puts 'Enter p to play. Enter q to quit.'
-    choice = gets.chomp.downcase.strip
-    if choice == 'q'
-      puts 'Goodbye.'
-    elsif choice == 'p'
+    q_or_p = ''
+    loop do
+      puts ''
+      puts '===================NEW GAME==================='
+      puts ''
+      puts 'Welcome to BATTLESHIP'
+      puts 'Enter p to play. Enter q to quit.'
+      choice = gets.chomp.downcase.strip
+      if choice == 'q'
+        q_or_p = 'q'
+        break
+      elsif choice == 'p'
+        q_or_p = 'p'
+        break
+      else
+        puts 'Please enter a valid game option.'
+      end
+    end
+    if q_or_p == 'p'
       cpu_first_turn
+    elsif q_or_p == 'q'
+      puts 'Goodbye.'
     end
   end
 
