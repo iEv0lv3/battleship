@@ -9,11 +9,7 @@ class Game
   end
 
   def start_game
-    @new_game = Game.new
-    @human_user = User.new
-    @computer_user = User.new
-    @turn_number = 0
-    @new_game.game_setup
+    @new_game = Game.new.game_setup
   end
 
   def game_setup
