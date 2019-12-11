@@ -1,5 +1,5 @@
 class Game
-  attr_reader :human_user, :computer_user, :turn_number, :game_number
+  attr_reader :human_user, :computer_user, :turn_number
 
   def initialize
     @human_user = User.new
@@ -31,10 +31,16 @@ class Game
       human_lose = @human_user.ships.all?(&:sunk?)
       cpu_lose = @computer_user.ships.all?(&:sunk?)
       if human_lose == true
-        puts 'I won!'
+        victory_screen
+        puts ''
+        puts "I won! 🔥 😀 🔥"
+        puts ''
         break
       elsif cpu_lose == true
-        puts 'You won!'
+        victory_screen
+        puts ''
+        puts "You won! 🔥 😀 🔥"
+        puts ''
         break
       else
         take_turn
@@ -53,5 +59,16 @@ class Game
       new_turn.cpu_turn
       @turn_number += 1
     end
+  end
+
+  def victory_screen
+    puts ''
+    puts ''
+    puts '=============FINAL COMPUTER BOARD============='
+    @computer_user.board.render
+    puts ''
+    puts ''
+    puts '==============FINAL PLAYER BOARD=============='
+    @human_user.board.render
   end
 end
