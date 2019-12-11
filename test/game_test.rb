@@ -12,6 +12,7 @@ require 'pry'
 
 class GameTest < Minitest::Test
   def test_game_class_exists
+    skip
     new_game = Game.new
 
     assert_instance_of Game, new_game
