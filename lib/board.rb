@@ -1,4 +1,3 @@
-require 'pry'
 class Board
   attr_accessor :cells
 
@@ -97,7 +96,7 @@ class Board
 
   def place(ship, coordinates)
     if valid_placement?(ship, coordinates) == false
-      "Coordinates not vaild for ship placement, try again!"
+      "Coordinates not valid for ship placement, try again!"
     else
       keys = coordinates
       keys.each do |key|
