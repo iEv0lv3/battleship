@@ -12,7 +12,6 @@ require 'pry'
 
 class GameTest < Minitest::Test
   def test_game_class_exists
-    skip
     new_game = Game.new
 
     assert_instance_of Game, new_game
@@ -20,7 +19,7 @@ class GameTest < Minitest::Test
 
   def test_game_attributes
     new_game = Game.new
-    binding.pry
+
     assert_instance_of User, new_game.human_user
     assert_instance_of User, new_game.computer_user
   end
