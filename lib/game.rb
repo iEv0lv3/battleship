@@ -12,6 +12,13 @@ class Game
     @new_game = Game.new.game_setup
   end
 
+  def board_size
+    # input * Cell.new(input size). So if input size is 10, cells should be
+    # a-j and 1-10. coordinate.next works for "A1"
+    user_input = gets.chomp.strip
+    
+  end
+
   def game_setup
     turn = Turn.new(@turn_number, @computer_user, @human_user)
     return unless turn.welcome_screen == 'p'
