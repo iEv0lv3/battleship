@@ -68,7 +68,6 @@ class Turn
   end
 
   def validate_human_input(ship, coordinates)
-    coordinates.sort!
     if coordinates.length != ship.length
       puts 'Those are invalid coordinates. Please try again.'
     elsif coordinates.all? { |cell| @user.board.cells.include?(cell) } == false
