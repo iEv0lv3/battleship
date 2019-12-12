@@ -21,4 +21,13 @@ class UserTest < Minitest::Test
 
     assert_instance_of Board, user1.board
   end
+
+  def test_can_add_new_ships
+    skip
+    user1 = User.new
+    cruiser = Ship.new('cruiser', 3)
+    submarine = Ship.new('submarine', 2)
+
+    assert_equal [cruiser, submarine], user1.new_ships
+  end
 end
